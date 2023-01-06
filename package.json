@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "gulp"
   },
-  "author": "Juan De La Torre",
+  "author": "Juan Duarte",
   "license": "ISC",
   "devDependencies": {
     "cssnano": "^5.1.0",
