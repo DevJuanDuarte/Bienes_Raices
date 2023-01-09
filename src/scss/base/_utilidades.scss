@@ -3,10 +3,16 @@
     margin-bottom: calc($separacion / 2);
 }
 .contenido-centrado {
-    max-width: 800px;
+    max-width: 80rem;
 }
 
 .alinear-derecha {
     display: flex;
     justify-content: flex-end;
+}
+
+.precio {
+    color: $verde;
+    font-weight: $bold;
+    font-size: 3rem;
 }
