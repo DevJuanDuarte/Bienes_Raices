@@ -15,16 +15,17 @@
         background-position: center center;
         background-size: cover;
 
-        @include tablet{
+        @include tablet {
             min-height: 70rem;
         }
 
         .contenido-header {
-            @include tablet{
+            @include tablet {
                 min-height: 70rem;
             }
         }
     }
+    
 }
 
 .contenido-header {
@@ -41,3 +42,4 @@
 
     }
 }
+
