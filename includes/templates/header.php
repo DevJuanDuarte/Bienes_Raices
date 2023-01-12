@@ -16,15 +16,15 @@
         <div class="contenedor contenido-header">
             <div class="barra">
                 <a href="/bienesraices/index.php">
-                    <img class="logo-header" src="build/img/logo.svg" alt="Logotipo de imagenes">
+                    <img class="logo-header" src="/bienesraices/build/img/logo.svg" alt="Logotipo de imagenes">
                 </a>
 
                 <div class="mobile-menu">
-                    <img src="build/img/barras.svg" alt="icono menu responsive">
+                    <img src="/bienesraices/build/img/barras.svg" alt="icono menu responsive">
                 </div>
 
                 <div class="derecha">
-                    <img src="build/img/dark-mode.svg" alt="Modo nocturno" class="dark-mode-boton">
+                    <img src="/bienesraices/build/img/dark-mode.svg" alt="Modo nocturno" class="dark-mode-boton">
                     <nav class="navegacion">
                         <a href="nosotros.php">Nosotros</a>
                         <a href="anuncios.php">Anuncios</a>
