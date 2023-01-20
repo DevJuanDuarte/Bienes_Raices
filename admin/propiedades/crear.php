@@ -90,20 +90,30 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (empty($errores)) {
 
         //Crear la carpeta de imagenes:
-        $carpetaImagenes = '../../imagenes';
+        $carpetaImagenes = '../../imagenes/';
 
         if (!is_dir($carpetaImagenes)) {
             mkdir($carpetaImagenes);
         }
 
+        //Define la extensión para el archivo
+        if ($imagen['type'] === 'image/jpeg') {
+            $exten = '.jpg';
+        } else {
+            $exten = '.png';
+        }
+
+        //Generar un nombre unico
+        $nombreImagen = md5(uniqid(rand(), true) . $exten ) ;
+
         //Subir la imagen:
-        move_uploaded_file($imagen['tmp_name'], $carpetaImagenes . "/archivo.jpg");
-        exit;
+        move_uploaded_file($imagen['tmp_name'], $carpetaImagenes . $nombreImagen);
+      
 
 
         //Insertar en la base de datos:
-        $query = "INSERT INTO propiedades (titulo, precio, descripcion, habitaciones, wc, estacionamiento, creado, vendedorId)
-        VALUES ('$titulo', '$precio', '$descripcion', '$habitaciones', '$wc', '$estacionamiento', '$creado',  '$vendedorId')";
+        $query = "INSERT INTO propiedades (titulo, precio, imagen, descripcion, habitaciones, wc, estacionamiento, creado, vendedorId)
+        VALUES ('$titulo', '$precio', '$nombreImagen', '$descripcion', '$habitaciones', '$wc', '$estacionamiento', '$creado',  '$vendedorId')";
         // echo $query;
 
         $resultado = mysqli_query($db, $query);
