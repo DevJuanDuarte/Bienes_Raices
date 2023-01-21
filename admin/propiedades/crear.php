@@ -107,7 +107,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $nombreImagen = md5(uniqid(rand(), true) . $exten ) ;
 
         //Subir la imagen:
-        move_uploaded_file($imagen['tmp_name'], $carpetaImagenes . $nombreImagen);
+        move_uploaded_file($imagen['tmp_name'], $carpetaImagenes . $nombreImagen . $exten);
       
 
 
