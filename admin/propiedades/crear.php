@@ -96,18 +96,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             mkdir($carpetaImagenes);
         }
 
-        //Define la extensión para el archivo
-        if ($imagen['type'] === 'image/jpeg') {
-            $exten = '.jpg';
-        } else {
-            $exten = '.png';
-        }
+        // //Define la extensión para el archivo
+        // if ($imagen['type'] === 'image/jpeg') {
+        //     $exten = '.jpg';
+        // } else {
+        //     $exten = '.png';
+        // }
 
         //Generar un nombre unico
-        $nombreImagen = md5(uniqid(rand(), true) . $exten ) ;
+        $nombreImagen = md5(uniqid(rand(), true) . ".jpg" ) ;
 
         //Subir la imagen:
-        move_uploaded_file($imagen['tmp_name'], $carpetaImagenes . $nombreImagen . $exten);
+        move_uploaded_file($imagen['tmp_name'], $carpetaImagenes . $nombreImagen . ".jpg");
       
 
 

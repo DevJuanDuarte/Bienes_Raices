@@ -103,15 +103,31 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     //Revisar que el array de errores este vacio:
     if (empty($errores)) {
+        //Crear la carpeta de imagenes:
+        $carpetaImagenes = '../../imagenes/';
+
+        if (!is_dir($carpetaImagenes)) {
+            mkdir($carpetaImagenes);
+        }
+
+        $nombreImagen = '';
 
 
-        // /* SUBIDA DE ARCHIVOS */
-        // //Crear la carpeta de imagenes:
-        // $carpetaImagenes = '../../imagenes/';
+        if ($imagen['name']) {
+            unlink($carpetaImagenes . '/' . $propiedad['imagen'] . '.jpg');
 
-        // if (!is_dir($carpetaImagenes)) {
-        //     mkdir($carpetaImagenes);
-        // }
+            //Generar un nombre unico
+            $nombreImagen = md5(uniqid(rand(), true) . ".jpg");
+
+            //Subir la imagen:
+            move_uploaded_file($imagen['tmp_name'], $carpetaImagenes . $nombreImagen . ".jpg");
+        } else {
+            $nombreImagen = $propiedad['imagen'];
+        }
+
+
+        /* SUBIDA DE ARCHIVOS */
+
 
         // //Define la extensión para el archivo
         // if ($imagen['type'] === 'image/jpeg') {
@@ -120,23 +136,19 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         //     $exten = '.png';
         // }
 
-        // //Generar un nombre unico
-        // $nombreImagen = md5(uniqid(rand(), true) . $exten);
 
-        // //Subir la imagen:
-        // move_uploaded_file($imagen['tmp_name'], $carpetaImagenes . $nombreImagen . $exten);
 
 
 
         //Insertar en la base de datos:
-        $query = "UPDATE propiedades SET titulo = '{$titulo}', precio = '{$precio}', 
+        $query = "UPDATE propiedades SET titulo = '{$titulo}', precio = '{$precio}', imagen = '{$nombreImagen}',
         descripcion = '{$descripcion}', habitaciones = {$habitaciones}, wc = {$wc}, 
         estacionamiento = {$estacionamiento}, vendedorId = {$vendedorId} WHERE id = {$id}";
 
 
         // echo $query;
 
-        
+
         $resultado = mysqli_query($db, $query);
 
         if ($resultado) {
