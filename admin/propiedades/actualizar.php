@@ -43,7 +43,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     echo "<pre>";
     var_dump($_POST);
     echo "</pre>";
-    exit;
 
     // echo "<pre>";
     // var_dump($_FILES);
@@ -57,12 +56,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $wc = mysqli_real_escape_string($db, $_POST['wc']);
     $estacionamiento = mysqli_real_escape_string($db, $_POST['estacionamiento']);
     $vendedorId = mysqli_real_escape_string($db, $_POST['vendedorId']);
-    $creado = date ('Y/m/d');
+    $creado = date('Y/m/d');
 
     //Asignar files a una variable:
     $imagen = $_FILES['imagen'];
-    
-    
+
+
 
     if (!$titulo) {
         $errores[] = "Debes añadir un titulo";
@@ -92,10 +91,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $errores[] = "Debes añadir un vendedor";
     }
 
-    if (!$imagen['name'] || $imagen['error']) {
-        $errores[] = 'La imagen es obligatoria';
-    }
-
     //Validar por tamaño en (1mb máximo):
     $medida = 1000 * 1000;
     if ($imagen['size'] > $medida) {
@@ -109,38 +104,44 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     //Revisar que el array de errores este vacio:
     if (empty($errores)) {
 
-        //Crear la carpeta de imagenes:
-        $carpetaImagenes = '../../imagenes/';
 
-        if (!is_dir($carpetaImagenes)) {
-            mkdir($carpetaImagenes);
-        }
+        // /* SUBIDA DE ARCHIVOS */
+        // //Crear la carpeta de imagenes:
+        // $carpetaImagenes = '../../imagenes/';
 
-        //Define la extensión para el archivo
-        if ($imagen['type'] === 'image/jpeg') {
-            $exten = '.jpg';
-        } else {
-            $exten = '.png';
-        }
+        // if (!is_dir($carpetaImagenes)) {
+        //     mkdir($carpetaImagenes);
+        // }
 
-        //Generar un nombre unico
-        $nombreImagen = md5(uniqid(rand(), true) . $exten ) ;
+        // //Define la extensión para el archivo
+        // if ($imagen['type'] === 'image/jpeg') {
+        //     $exten = '.jpg';
+        // } else {
+        //     $exten = '.png';
+        // }
 
-        //Subir la imagen:
-        move_uploaded_file($imagen['tmp_name'], $carpetaImagenes . $nombreImagen . $exten);
-      
+        // //Generar un nombre unico
+        // $nombreImagen = md5(uniqid(rand(), true) . $exten);
+
+        // //Subir la imagen:
+        // move_uploaded_file($imagen['tmp_name'], $carpetaImagenes . $nombreImagen . $exten);
+
 
 
         //Insertar en la base de datos:
-        $query = "INSERT INTO propiedades (titulo, precio, imagen, descripcion, habitaciones, wc, estacionamiento, creado, vendedorId)
-        VALUES ('$titulo', '$precio', '$nombreImagen', '$descripcion', '$habitaciones', '$wc', '$estacionamiento', '$creado',  '$vendedorId')";
+        $query = "UPDATE propiedades SET titulo = '{$titulo}', precio = '{$precio}', 
+        descripcion = '{$descripcion}', habitaciones = {$habitaciones}, wc = {$wc}, 
+        estacionamiento = {$estacionamiento}, vendedorId = {$vendedorId} WHERE id = {$id}";
+
+
         // echo $query;
 
+        
         $resultado = mysqli_query($db, $query);
 
         if ($resultado) {
             //Redireccionar al usuario:
-            header("Location: /admin?resultado=1");
+            header("Location: /admin?resultado=2");
         }
     }
 }
@@ -160,13 +161,13 @@ incluirTemplate('header');
         </div>
     <?php endforeach; ?>
 
-    <form class="formulario" method="POST" action="/admin/propiedades/crear.php" enctype="multipart/form-data">
+    <form class="formulario" method="POST" enctype="multipart/form-data">
 
         <fieldset>
             <legend>Informacion General</legend>
 
             <label for="titulo">Titulo</label>
-            <input type="text" id="titulo" name="titulo"  placeholder="Titulo Propiedad" value="<?php echo $titulo; ?>">
+            <input type="text" id="titulo" name="titulo" placeholder="Titulo Propiedad" value="<?php echo $titulo; ?>">
 
             <label for="precio">Precio</label>
             <input type="number" id="precio" name="precio" placeholder="Precio Propiedad" value="<?php echo $precio; ?>">
@@ -174,7 +175,7 @@ incluirTemplate('header');
             <label for="imagen">Imagen</label>
             <input type="file" id="imagen" accept="image/jpeg, image/png" name="imagen">
 
-            <img src="/imagenes/<?php echo $imagenPropiedad. ".jpg"; ?>" class="imagen-small">
+            <img src="/imagenes/<?php echo $imagenPropiedad . ".jpg"; ?>" class="imagen-small">
 
             <label for="descripcion">Descripcion</label>
             <textarea id="descripcion" name="descripcion"><?php echo $descripcion; ?></textarea>

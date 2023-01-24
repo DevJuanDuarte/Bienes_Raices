@@ -21,7 +21,9 @@ incluirTemplate('header');
 <main class="contenedor seccion">
     <h1>Administrador de Bienes Raices</h1>
     <?php if (intval($resultado == 1)) : ?>
-    <p class="alerta exito">Creado correctamente</p>
+        <p class="alerta exito">Creado Correctamente</p>
+    <?php elseif (intval($resultado == 2)) : ?>
+        <p class="alerta exito">Actualizado Correctamente</p>
     <?php endif ?>
 
     <a href="/admin/propiedades/crear.php" class="boton boton-verde">Crear</a>
@@ -39,16 +41,16 @@ incluirTemplate('header');
 
         <tbody>
             <?php while ($propiedad = mysqli_fetch_assoc($resultadoConsulta)) : ?>
-            <tr>
-                <td><?php echo $propiedad['id']; ?></td>
-                <td><?php echo $propiedad['titulo']; ?></td>
-                <td><img src="/imagenes/<?php echo $propiedad['imagen']. ".jpg"; ?>" class="imagen-tabla"></td>
-                <td>$<?php echo $propiedad['precio']; ?></td>
-                <td>
-                    <a href="/admin/propiedades/actualizar.php?id=<?php echo $propiedad['id']; ?>" class="boton-amarillo-block">Editar</a>
-                    <a href="#" class="boton-rojo-block">Borrar</a>
-                </td>
-            </tr>
+                <tr>
+                    <td><?php echo $propiedad['id']; ?></td>
+                    <td><?php echo $propiedad['titulo']; ?></td>
+                    <td><img src="/imagenes/<?php echo $propiedad['imagen'] . ".jpg"; ?>" class="imagen-tabla"></td>
+                    <td>$<?php echo $propiedad['precio']; ?></td>
+                    <td>
+                        <a href="/admin/propiedades/actualizar.php?id=<?php echo $propiedad['id']; ?>" class="boton-amarillo-block">Editar</a>
+                        <a href="#" class="boton-rojo-block">Borrar</a>
+                    </td>
+                </tr>
             <?php endwhile; ?>
         </tbody>
     </table>
