@@ -24,7 +24,7 @@ incluirTemplate('header');
     <p class="alerta exito">Creado correctamente</p>
     <?php endif ?>
 
-    <a href="/admin/propiedades/crear.php" class="boton boton-verde">Nueva Propiedad</a>
+    <a href="/admin/propiedades/crear.php" class="boton boton-verde">Crear</a>
 
     <table class="propiedades">
         <thead>
@@ -45,8 +45,8 @@ incluirTemplate('header');
                 <td><img src="/imagenes/<?php echo $propiedad['imagen']. ".jpg"; ?>" class="imagen-tabla"></td>
                 <td>$<?php echo $propiedad['precio']; ?></td>
                 <td>
-                    <a href="#" class="boton-amarillo-block">Actualizar</a>
-                    <a href="#" class="boton-rojo-block">Eliminar</a>
+                    <a href="/admin/propiedades/actualizar.php?id=<?php echo $propiedad['id']; ?>" class="boton-amarillo-block">Editar</a>
+                    <a href="#" class="boton-rojo-block">Borrar</a>
                 </td>
             </tr>
             <?php endwhile; ?>

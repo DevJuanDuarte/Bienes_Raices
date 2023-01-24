@@ -186,7 +186,7 @@ incluirTemplate('header');
         </fieldset>
 
 
-        <input type="submit" value="Crear Propiedad" class="boton boton-verde">
+        <input type="submit" value="Crear" class="boton boton-verde">
 
 
     </form>
