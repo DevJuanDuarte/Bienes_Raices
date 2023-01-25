@@ -74,10 +74,10 @@ incluirTemplate('header');
                     <td><img src="/imagenes/<?php echo $propiedad['imagen'] . ".jpg"; ?>" class="imagen-tabla"></td>
                     <td>$<?php echo $propiedad['precio']; ?></td>
                     <td>
-                        <a href="/admin/propiedades/actualizar.php?id=<?php echo $propiedad['id']; ?>" class="boton-amarillo-block">Editar</a>
+                        <a href="/admin/propiedades/actualizar.php?id=<?php echo $propiedad['id']; ?>" class="boton boton-amarillo-block">Editar</a>
                         <form method="POST" class="w-100">
                             <input type="hidden" name="id" value="<?php echo $propiedad['id'];?>">
-                            <input type="submit" value="Eliminar" class="boton-rojo-block w-100">
+                            <input type="submit" value="Eliminar" class="boton-rojo-block">
                         </form>
                     </td>
                 </tr>
