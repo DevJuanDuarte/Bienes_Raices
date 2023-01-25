@@ -4,7 +4,6 @@ incluirTemplate('header');
 ?>
 
 <main class="contenedor seccion">
-    <section class=" seccion contenedor">
 
         <h2>Casas & Apartamentos en Venta</h2>
         <?php

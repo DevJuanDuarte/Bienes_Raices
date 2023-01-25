@@ -96,8 +96,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             mkdir($carpetaImagenes);
         }
 
-        // //Define la extensión para el archivo
-        // if ($imagen['type'] === 'image/jpeg') {
+        //Define la extensión para el archivo
+        // if ($imagen['type_name'] === 'image/jpeg') {
         //     $exten = '.jpg';
         // } else {
         //     $exten = '.png';
