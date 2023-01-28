@@ -29,7 +29,7 @@ incluirTemplate('header');
 <main class="contenedor seccion contenido-centrado">
     <h1><?php echo $propiedad['titulo']; ?></h1>
 
-    <img loading="lazy" src="/imagenes/<?php echo $propiedad['imagen'].".jpg"; ?>" alt="Imagen de la propiedad">
+    <img loading="lazy" src="/imagenes/<?php echo $propiedad['imagen']; ?>" alt="Imagen de la propiedad">
 
     <div class="resumen-propiedad">
         <p class="precio">$<?php echo number_format($propiedad['precio']); ?></p>

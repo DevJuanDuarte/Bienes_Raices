@@ -1,5 +1,11 @@
 <?php
 
+require '../includes/funciones.php';
+$auth = estaAutenticado();
+if (!$auth) {
+    header('Location: /');
+}
+
 //Importar la conexión:
 require '../includes/config/database.php';
 $db = conectarDB();
@@ -13,10 +19,10 @@ $resultadoConsulta = mysqli_query($db, $query);
 //Muestra el mensaje condicional:
 $resultado = $_GET['resultado'] ?? null;
 
-if ($_SERVER['REQUEST_METHOD']=== 'POST') {
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $id = $_POST['id'];
     $id = filter_var($id, FILTER_VALIDATE_INT);
-    
+
     if ($id) {
 
         //Eliminar el archivo:
@@ -24,9 +30,9 @@ if ($_SERVER['REQUEST_METHOD']=== 'POST') {
         $resultado = mysqli_query($db, $query);
         $propiedad = mysqli_fetch_assoc($resultado);
 
-        unlink('../imagenes/' . $propiedad['imagen'] . ".jpg");
-        
-    
+        unlink('../imagenes/' . $propiedad['imagen']);
+
+
 
         //Eliminar la propiedad:
         $query = "DELETE FROM propiedades WHERE id = {$id}";
@@ -39,7 +45,7 @@ if ($_SERVER['REQUEST_METHOD']=== 'POST') {
 }
 
 //Incluye un template:
-require '../includes/funciones.php';
+
 incluirTemplate('header');
 ?>
 
@@ -49,7 +55,7 @@ incluirTemplate('header');
         <p class="alerta exito">Creado Correctamente</p>
     <?php elseif (intval($resultado == 2)) : ?>
         <p class="alerta exito">Actualizado Correctamente</p>
-        <?php elseif (intval($resultado == 3)) : ?>
+    <?php elseif (intval($resultado == 3)) : ?>
         <p class="alerta exito">Eliminado Correctamente</p>
     <?php endif ?>
 
@@ -71,12 +77,12 @@ incluirTemplate('header');
                 <tr>
                     <td><?php echo $propiedad['id']; ?></td>
                     <td><?php echo $propiedad['titulo']; ?></td>
-                    <td><img src="/imagenes/<?php echo $propiedad['imagen'] . ".jpg"; ?>" class="imagen-tabla"></td>
-                    <td>$<?php echo $propiedad['precio']; ?></td>
+                    <td><img src="/imagenes/<?php echo $propiedad['imagen']; ?>" class="imagen-tabla"></td>
+                    <td>$<?php echo number_format($propiedad['precio']); ?></td>
                     <td>
                         <a href="/admin/propiedades/actualizar.php?id=<?php echo $propiedad['id']; ?>" class="boton boton-amarillo-block">Editar</a>
                         <form method="POST" class="w-100">
-                            <input type="hidden" name="id" value="<?php echo $propiedad['id'];?>">
+                            <input type="hidden" name="id" value="<?php echo $propiedad['id']; ?>">
                             <input type="submit" value="Eliminar" class="boton-rojo-block">
                         </form>
                     </td>

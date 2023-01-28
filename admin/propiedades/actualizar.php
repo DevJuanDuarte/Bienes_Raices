@@ -1,4 +1,14 @@
 <?php
+
+
+require '../../includes/funciones.php';
+$auth = estaAutenticado();
+if (!$auth) {
+    header('Location: /');
+}
+
+
+
 //Validar la URL por ID Valido:
 $id = $_GET['id'];
 $id = filter_var($id, FILTER_VALIDATE_INT);
@@ -117,10 +127,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             unlink($carpetaImagenes . '/' . $propiedad['imagen'] . '.jpg');
 
             //Generar un nombre unico
-            $nombreImagen = md5(uniqid(rand(), true) . ".jpg");
+            $nombreImagen = md5(uniqid(rand(), true));
 
             //Subir la imagen:
-            move_uploaded_file($imagen['tmp_name'], $carpetaImagenes . $nombreImagen . ".jpg");
+            move_uploaded_file($imagen['tmp_name'], $carpetaImagenes . $nombreImagen);
         } else {
             $nombreImagen = $propiedad['imagen'];
         }
@@ -158,7 +168,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 }
 
-require '../../includes/funciones.php';
+
 incluirTemplate('header');
 ?>
 
@@ -187,7 +197,7 @@ incluirTemplate('header');
             <label for="imagen">Imagen</label>
             <input type="file" id="imagen" accept="image/jpeg, image/png" name="imagen">
 
-            <img src="/imagenes/<?php echo $imagenPropiedad . ".jpg"; ?>" class="imagen-small">
+            <img src="/imagenes/<?php echo $imagenPropiedad ?>" class="imagen-small">
 
             <label for="descripcion">Descripcion</label>
             <textarea id="descripcion" name="descripcion"><?php echo $descripcion; ?></textarea>

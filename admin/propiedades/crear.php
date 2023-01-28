@@ -1,4 +1,11 @@
 <?php
+
+require '../../includes/funciones.php';
+$auth = estaAutenticado();
+if (!$auth) {
+    header('Location: /');
+}
+
 //Base de datos:
 require '../../includes/config/database.php';
 
@@ -96,18 +103,21 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             mkdir($carpetaImagenes);
         }
 
-        //Define la extensión para el archivo
-        // if ($imagen['type_name'] === 'image/jpeg') {
-        //     $exten = '.jpg';
-        // } else {
-        //     $exten = '.png';
-        // }
-
         //Generar un nombre unico
-        $nombreImagen = md5(uniqid(rand(), true) . ".jpg" ) ;
+        $nombreImagen = md5(uniqid(rand(), true)) ;
 
         //Subir la imagen:
-        move_uploaded_file($imagen['tmp_name'], $carpetaImagenes . $nombreImagen . ".jpg");
+        $nombreImagen = md5(uniqid(rand(), true));
+ 
+        if($imagen['type'] === 'image/jpeg'){
+            $nombreImagen .= ".jpg";
+            move_uploaded_file($imagen['tmp_name'], $carpetaImagenes . $nombreImagen);
+        }elseif($imagen['type'] === 'image/png'){
+            $nombreImagen .= ".png";
+            move_uploaded_file($imagen['tmp_name'], $carpetaImagenes . $nombreImagen);
+        } else {
+            $errores[] = "El formato de la imagen tiene que ser jpg o png";
+        }
       
 
 
@@ -125,7 +135,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 }
 
-require '../../includes/funciones.php';
 incluirTemplate('header');
 ?>
 
@@ -152,7 +161,7 @@ incluirTemplate('header');
             <input type="number" id="precio" name="precio" placeholder="Precio Propiedad" value="<?php echo $precio; ?>">
 
             <label for="imagen">Imagen</label>
-            <input type="file" id="imagen" accept="image/jpeg, image/png" name="imagen">
+            <input type="file" id="imagen" accept="image/jpeg, image/png" name="imagen" value="<?php echo $imagen; ?>">
 
             <label for="descripcion">Descripcion</label>
             <textarea id="descripcion" name="descripcion"><?php echo $descripcion; ?></textarea>
