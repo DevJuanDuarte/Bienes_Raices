@@ -1,0 +1,17 @@
+{
+    "name": "juandavid/bienes_raices",
+    "description": "Creando un proyecto con POO",
+    "type": "project",
+    "authors": [
+        {
+            "name": "DevJuanDuarte",
+            "email": "juan.devcontact@gmail.com"
+        }
+    ],
+    "require": {},
+    "autoload": {
+        "psr-4": {
+            "App\\" : "./classes"
+        }
+    }
+}

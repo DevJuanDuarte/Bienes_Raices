@@ -1,5 +1,7 @@
 <?php
 
+
+
 $id = $_GET['id'];
 $id = filter_var($id, FILTER_VALIDATE_INT);
 // var_dump($id);
@@ -7,8 +9,9 @@ $id = filter_var($id, FILTER_VALIDATE_INT);
 if (!$id) {
     header('location: /');
 }
+require 'includes/app.php';
 
-require 'includes/config/database.php';
+//Importar la conexión
 $db = conectarDB();
 
 //Consultar:
@@ -22,7 +25,6 @@ if (!$resultado->num_rows) {
 $propiedad = mysqli_fetch_assoc($resultado);
 
 
-require 'includes/funciones.php';
 incluirTemplate('header');
 ?>
 

@@ -4,7 +4,7 @@
 //SE DEBE ELIMINAR EL ARCHIVO.
 
 //Importar la conexión:
-require 'includes/config/database.php';
+require 'includes/app.php';
 $db = conectarDB();
 
 
@@ -18,7 +18,7 @@ $passwordHash = password_hash($password, PASSWORD_DEFAULT);
 //Query para crear el usuario:
 $query = " INSERT INTO usuarios (email,password) VALUES ('{$email}', '{$passwordHash}') ";
 
-// echo $query;
+echo $query;
 
 
 
