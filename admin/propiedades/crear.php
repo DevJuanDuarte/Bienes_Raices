@@ -1,13 +1,10 @@
 <?php
+require '../../includes/app.php';
 
-require '../../includes/funciones.php';
-$auth = estaAutenticado();
-if (!$auth) {
-    header('Location: /');
-}
+use App\Propiedad;
 
-//Base de datos:
-require '../../includes/config/database.php';
+estaAutenticado();
+
 
 $db = conectarDB();
 
