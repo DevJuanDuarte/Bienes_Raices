@@ -3,6 +3,7 @@ require '../../includes/app.php';
 
 use App\Propiedad;
 
+
 estaAutenticado();
 
 
@@ -25,6 +26,8 @@ $vendedorId = '';
 
 //Ejecutar el codigo despues de que se envia el formulario:
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $propiedad = new Propiedad($_POST);
+    $propiedad->guardar();
     // echo "<pre>";
     // var_dump($_POST);
     // echo "</pre>";
