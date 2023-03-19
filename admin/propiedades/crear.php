@@ -1,8 +1,7 @@
 <?php
 require '../../includes/app.php';
 
-use App\Propiedad;
-
+use App\Propiedad;;
 
 estaAutenticado();
 
@@ -27,14 +26,16 @@ $vendedorId = '';
 //Ejecutar el codigo despues de que se envia el formulario:
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $propiedad = new Propiedad($_POST);
+    // debuguear($propiedad);
     $propiedad->guardar();
+    exit;
     // echo "<pre>";
     // var_dump($_POST);
     // echo "</pre>";
 
-    // echo "<pre>";
-    // var_dump($_FILES);
-    // echo "</pre>";
+    echo "<pre>";
+    var_dump($_FILES);
+    echo "</pre>";
 
 
     $titulo = mysqli_real_escape_string($db, $_POST['titulo']);
@@ -121,9 +122,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
       
 
 
-        //Insertar en la base de datos:
-        $query = "INSERT INTO propiedades (titulo, precio, imagen, descripcion, habitaciones, wc, estacionamiento, creado, vendedorId)
-        VALUES ('$titulo', '$precio', '$nombreImagen', '$descripcion', '$habitaciones', '$wc', '$estacionamiento', '$creado',  '$vendedorId')";
+        
         // echo $query;
 
         $resultado = mysqli_query($db, $query);
