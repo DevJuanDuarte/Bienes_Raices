@@ -3,7 +3,10 @@ require '../../includes/app.php';
 
 use App\Propiedad;;
 
-estaAutenticado();
+$auth = estaAutenticado();
+if (!$auth) {
+    header('Location: /');
+}
 
 
 $db = conectarDB();
