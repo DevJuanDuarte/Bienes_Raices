@@ -1,7 +1,8 @@
 <?php
 require '../../includes/app.php';
 
-use App\Propiedad;;
+use App\Propiedad;
+use Intervention\Image\ImageManagerStatic as Image;
 
 $auth = estaAutenticado();
 if (!$auth) {
@@ -29,58 +30,34 @@ $vendedorId = '';
 
 //Ejecutar el codigo despues de que se envia el formulario:
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-
     //Creamos una nueva instancia, de esa forma tendremos la referencia y podremos leer los atributos del objeto
     $propiedad = new Propiedad($_POST);
+    //Agregar random a la imagen
+    $nombreImagen = md5(uniqid(rand(), true)) . ".jpg";
+    //Setear la imagen:
+    //Realiza un rezise con intervention:
+    if ($_FILES['imagen']['tmp_name']) {
+        $image = Image::make($_FILES['imagen']['tmp_name'])->fit(800, 600);
+        $propiedad->setImage($nombreImagen);
+    }
 
     //Luego hacemos una validación
     $errores = $propiedad->validar();
 
-
     if (empty($errores)) {
 
-        // debuguear($propiedad);
-        $propiedad->guardar();
-
-        //Asignar files a una variable:
-        $imagen = $_FILES['imagen'];
-
-        // echo "<pre>";
-        // var_dump($errores);
-        // echo "</pre>";
-
-        //Revisar que el array de errores este vacio:
-
-        //Crear la carpeta de imagenes:
-        $carpetaImagenes = '../../imagenes/';
-
-        if (!is_dir($carpetaImagenes)) {
-            mkdir($carpetaImagenes);
+        //Crear la carpeta para subir imagenes:
+        if (!is_dir(CARPETA_IMAGENES)) {
+            mkdir(CARPETA_IMAGENES);
         }
-
-        //Generar un nombre unico
-        $nombreImagen = md5(uniqid(rand(), true));
-
-        //Subir la imagen:
-        $nombreImagen = md5(uniqid(rand(), true));
-
-        if ($imagen['type'] === 'image/jpeg') {
-            $nombreImagen .= ".jpg";
-            move_uploaded_file($imagen['tmp_name'], $carpetaImagenes . $nombreImagen);
-        } elseif ($imagen['type'] === 'image/png') {
-            $nombreImagen .= ".png";
-            move_uploaded_file($imagen['tmp_name'], $carpetaImagenes . $nombreImagen);
-        } else {
-            $errores[] = "El formato de la imagen tiene que ser jpg o png";
-        }
-
-
-
-
-        // echo $query;
-
-        $resultado = mysqli_query($db, $query);
-
+        //Guardar la imagen en el servidor:
+        $image->save(CARPETA_IMAGENES . $nombreImagen);
+        //Mostrar la extensión de la imagen guardada:
+        $extension = pathinfo(CARPETA_IMAGENES . $nombreImagen, PATHINFO_EXTENSION);
+        echo "La imagen se ha guardado con éxito en la carpeta " . CARPETA_IMAGENES . " con la extensión " . $extension;
+        //Guardar en la base de datos:
+        $resultado = $propiedad->guardar();
+        //Mensaje de exito o error:
         if ($resultado) {
             //Redireccionar al usuario:
             header("Location: /admin?resultado=1");
